@@ -24,8 +24,8 @@
 
 Summary: Apache HTTP Server
 Name: httpd24u
-Version: 2.4.52
-Release: 1%{?dist}
+Version: 2.4.54
+Release: 2%{?dist}
 URL: https://httpd.apache.org/
 Source0: https://www.apache.org/dist/httpd/httpd-%{version}.tar.bz2
 Source2: httpd.logrotate
@@ -67,20 +67,22 @@ Source53: httpd.logrotate-legacy
 # build/scripts patches
 Patch1: httpd-2.4.1-apctl.patch
 Patch2: httpd-2.4.43-apxs.patch
-Patch3: httpd-2.4.1-deplibs.patch
+Patch3: httpd-2.4.43-deplibs.patch
 Patch6: httpd-2.4.3-apctl-systemd.patch
-Patch8: httpd-2.4.35-layout-legacy.patch
+#Patch8: httpd-2.4.35-layout-legacy.patch
 # Needed for socket activation and mod_systemd patch
-Patch19: httpd-2.4.43-detect-systemd.patch
+Patch19: httpd-2.4.53-detect-systemd.patch
 # Features/functional changes
-Patch23: httpd-2.4.33-export.patch
-Patch24: httpd-2.4.1-corelimit.patch
-Patch25: httpd-2.4.43-selinux.patch
+Patch23: httpd-2.4.53-export.patch
+Patch24: httpd-2.4.43-corelimit.patch
+Patch25: httpd-2.4.54-selinux.patch
 Patch26: httpd-2.4.43-gettid.patch
-Patch27: httpd-2.4.2-icons.patch
-Patch30: httpd-2.4.4-cachehardmax.patch
-Patch34: httpd-2.4.17-socket-activation.patch
+Patch27: httpd-2.4.54-icons.patch
+Patch30: httpd-2.4.43-cachehardmax.patch
+Patch34: httpd-2.4.43-socket-activation.patch
 Patch41: httpd-2.4.43-r1861793+.patch
+	
+Patch65: httpd-2.4.51-r1894152.patch
 
 # Security fixes
 
@@ -293,6 +295,7 @@ interface for storing and accessing per-user session data.
 %patch30 -p1 -b .cachehardmax
 %{?with_systemd:%patch34 -p1 -b .socketactivation}
 %patch41 -p1 -b .r1861793+
+%patch65 -p1 -b .r1894152
 
 # Patch in the vendor string
 sed -i '/^#define PLATFORM/s/Unix/%{vstring}/' os/unix/os.h
@@ -824,8 +827,19 @@ exit $rv
 
 
 %changelog
-* Wed Dec 22 2021 Reporter4u <reporter4u@gmail.com> - 2.4.52-1
+* Mon Jul 11 2022 Reporter4u <reporter4u@gmail.com> - 2.4.54-2
+- Update patch httpd-2.4.54-icons.patch from FC
+- Update patch httpd-2.4.54-selinux.patch from FC
+
+* Thu Jun 09 2022 Reporter4u <reporter4u@gmail.com> - 2.4.54-1
 - Latest upstream
+
+* Mon Mar 14 2022 Reporter4u <reporter4u@gmail.com> - 2.4.53-1
+- Updated to 2.4.53 from Upstream
+
+* Thu Jan 06 2022 Steve Simpson <steven.simpson@parsons.com> - 2.4.52-1
+- Updated to 2.4.52 from Upstream
+- Added patch r1894152 from FC
 
 * Fri Oct 08 2021 Steve Simpson <steven.simpson@parsons.com> - 2.4.51-1
 - Latest upstream
